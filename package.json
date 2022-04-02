@@ -1,0 +1,18 @@
+{
+  "name": "mint-nft",
+  "version": "1.0.0",
+  "description": "HOW TO WRITE & DEPLOY AN NFT",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Charles-Xavier.eth",
+  "license": "ISC",
+  "devDependencies": {
+    "hardhat": "^2.9.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.5.0",
+    "dotenv": "^16.0.0"
+  }
+}
