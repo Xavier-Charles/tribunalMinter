@@ -13,3 +13,7 @@ main()
     console.error(error);
     process.exit(1);
   });
+
+  /**
+   * Tribunal NFT: Contract Adddress: 0x64DA298bDd8200482b821951308eAc0732d3A5e8
+   */
