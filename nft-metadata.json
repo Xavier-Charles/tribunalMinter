@@ -1,15 +1,15 @@
 {
   "attributes": [
     {
-      "trait_type": "accessory",
-      "value": "Crown"
+      "trait_type": "Rank",
+      "value": "two"
     },
     {
-      "trait_type": "Color",
-      "value": "Multi"
+      "trait_type": "Level",
+      "value": "Tester"
     }
   ],
   "description": "The world's most adorable and sensitive pup.",
   "image": "ipfs://QmRpnKT3iLVZ9EEUMXSjJh4bq78PNyYzXCqH9LFwB5PKRA",
-  "name": "Ramses"
+  "name": "Tester"
 }
