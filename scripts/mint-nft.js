@@ -9,6 +9,8 @@ const web3 = createAlchemyWeb3(API_URL);
 const contract = require("../artifacts/contracts/myNFT.sol/TribunalNFT.json");
 const contractAddress = "0x64da298bdd8200482b821951308eac0732d3a5e8";
 const nftContract = new web3.eth.Contract(contract.abi, contractAddress);
+const TEST_TOKEN_URI =
+  "https://gateway.pinata.cloud/ipfs/QmQqacaAsTp3J8BbH5ZRLb7p1E36CZAgW5rfaq5eMBZJzK";
 
 async function mintNFT(tokenURI) {
   const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, "latest"); //get latest nonce
@@ -48,6 +50,6 @@ async function mintNFT(tokenURI) {
     });
 }
 
-mintNFT(
-  "https://gateway.pinata.cloud/ipfs/QmQqacaAsTp3J8BbH5ZRLb7p1E36CZAgW5rfaq5eMBZJzK"
-);
+// mintNFT(TOKEN_URI); 
+
+export const MintTestNFT = () => mintNFT(TEST_TOKEN_URI);
