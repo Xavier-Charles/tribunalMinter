@@ -49,5 +49,5 @@ async function mintNFT(tokenURI) {
 }
 
 mintNFT(
-  "https://gateway.pinata.cloud/ipfs/QmRUYqHpiiPg3NsRjguv7WSrgHMTFu25EeP3zdnya14xg4"
+  "https://gateway.pinata.cloud/ipfs/QmQqacaAsTp3J8BbH5ZRLb7p1E36CZAgW5rfaq5eMBZJzK"
 );
