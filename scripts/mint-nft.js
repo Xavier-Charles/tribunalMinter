@@ -51,8 +51,7 @@ async function mintNFT(tokenURI) {
 
 async function mintNFT2(tokenURI, req_addr) {
   const nonce = await web3.eth.getTransactionCount(PUBLIC_KEY, "latest"); //get latest nonce
-  console.log(tokenURI);
-  console.log(req_addr);
+
   //the transaction
   const tx = {
     from: req_addr,
@@ -61,11 +60,12 @@ async function mintNFT2(tokenURI, req_addr) {
     gas: 500000,
     data: nftContract.methods.mintNFT(PUBLIC_KEY, tokenURI).encodeABI(),
   };
+  var _tx = { hash: null };
 
   const signPromise = web3.eth.accounts.signTransaction(tx, PRIVATE_KEY);
   const mint = await signPromise
     .then(async (signedTx) => {
-      const transaction =  await web3.eth.sendSignedTransaction(
+      const transaction = await web3.eth.sendSignedTransaction(
         signedTx.rawTransaction,
         function (err, hash) {
           if (!err) {
@@ -74,22 +74,34 @@ async function mintNFT2(tokenURI, req_addr) {
               hash,
               "\nCheck Alchemy's Mempool to view the status of your transaction!"
             );
-            return hash;
+            _tx.hash = hash;
           } else {
             console.log(
               "Something went wrong when submitting your transaction:",
               err
             );
-            return err;
           }
         }
       );
-      return transaction
+      // can't wait for tx
+      // return transaction
+      function getHash() {
+        console.log(_tx.hash);
+        if (_tx.hash) {
+          return _tx.hash;
+        } else {
+          setTimeout(
+            getHash,
+            500
+          ); /* this checks the flag every 500 milliseconds*/
+        }
+      }
+      const hash_result = await getHash();
+      return hash_result;
     })
     .catch((err) => {
       console.log(" Promise failed:", err);
     });
-  console.log("mint ==>++>+>+>+", mint);
   return mint;
 }
 
