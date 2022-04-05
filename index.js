@@ -42,9 +42,10 @@ app.get("/", (req, res) => {
 
 // Create POST request
 app.post("/mint", async function requestHandler(req, res) {
+  res.setHeader("Content-Type", "application/json");
   if (req?.body?.address) {
     const result = await Mint(req?.body?.address);
-    res.status(200).send({ message: "Sucessful", result });
+    res.status(200).send(JSON.stringify({ message: "Sucessful", result }));
   } else res.status(401).send({ error: "No address sent" });
 });
 
