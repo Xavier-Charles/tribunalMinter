@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose"); 
+require("dotenv").config();
 const Proposal = require("./models/proposal");
 const Tribunal = require("./models/tribunal");
 
