@@ -1,9 +1,9 @@
 // Add Express
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose"); // import mongoose
-const { Mint } = require("./scripts/mint-nft");
+const mongoose = require("mongoose"); 
 const Proposal = require("./models/proposal");
+const Tribunal = require("./models/tribunal");
 
 const { MONGO_URL } = process.env;
 
@@ -30,14 +30,6 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 
-// // Create POST request
-// app.post("/mint", async function requestHandler(req, res) {
-//   res.setHeader("Content-Type", "application/json");
-//   if (req?.body?.address) {
-//     const result = await Mint(req?.body?.address);
-//     res.status(200).send(JSON.stringify({ message: "Sucessful", result }));
-//   } else res.status(401).send({ error: "No address sent" });
-// });
 
 // Get proposals
 router.get("/proposals", async (req, res) => {
@@ -150,6 +142,114 @@ router.delete("/proposal/:proposalId", async (req, res) => {
 // Initialize server
 app.listen(5000, () => {
   console.log("Running on port 5000.");
+});
+
+// Get tribunals
+router.get("/tribunals", async (req, res) => {
+  try {
+    let data = await Tribunal.find();
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Create a tribunal
+router.post("/tribunal", async (req, res) => {
+  try {
+    let tribunal = new Tribunal(req.body);
+    data = await tribunal.save();
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Read a tribunal
+router.get("/tribunal/:tribunalId", async (req, res) => {
+  try {
+    let tribunal = await Tribunal.findOne({
+      _id: req.params.tribunalId,
+    });
+    if (tribunal) {
+      res.status(200).json({
+        status: 200,
+        data: tribunal,
+      });
+    } else
+      res.status(400).json({
+        status: 400,
+        message: "No tribunal found",
+      });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Update a tribunal
+router.put("/tribunal/:tribunalId", async (req, res) => {
+  try {
+    let data = await Tribunal.findByIdAndUpdate(
+      req.params.tribunalId,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (data) {
+      res.status(200).json({
+        status: 200,
+        data: data,
+      });
+    } else
+      res.status(400).json({
+        status: 400,
+        message: "No tribunal found",
+      });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Delete tribunal
+router.delete("/tribunal/:tribunalId", async (req, res) => {
+  try {
+    let data = await Tribunal.findByIdAndRemove(req.params.tribunalId);
+    if (data) {
+      res.status(200).json({
+        status: 200,
+        message: "Tribunal deleted successfully",
+      });
+    } else {
+      res.status(400).json({
+        status: 400,
+        message: "No tribunal found",
+      });
+    }
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
 });
 
 // Export the Express API
