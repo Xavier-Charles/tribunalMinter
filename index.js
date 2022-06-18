@@ -140,10 +140,6 @@ router.delete("/proposal/:proposalId", async (req, res) => {
   }
 });
 
-// Initialize server
-app.listen(5000, () => {
-  console.log("Running on port 5000.");
-});
 
 // Get tribunals
 router.get("/tribunals", async (req, res) => {
@@ -251,6 +247,11 @@ router.delete("/tribunal/:tribunalId", async (req, res) => {
       message: err.message,
     });
   }
+});
+
+// Initialize server
+app.listen(5000, () => {
+  console.log("Running on port 5000.");
 });
 
 // Export the Express API
