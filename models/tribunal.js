@@ -21,6 +21,9 @@ let tribunalSchema = new Schema(
     mintFee: {
       type: mongoose.Decimal128,
     },
+    creator: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
