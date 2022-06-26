@@ -15,6 +15,9 @@ let tribunalSchema = new Schema(
     about: {
       type: String,
     },
+    address: {
+      type: String,
+    },
     fileUrl: {
       type: String,
     },
