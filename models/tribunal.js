@@ -27,6 +27,9 @@ let tribunalSchema = new Schema(
     creator: {
       type: String,
     },
+    creatorName: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
