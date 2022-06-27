@@ -21,6 +21,18 @@ let proposalSchema = new Schema(
     votes: {
       type: Object,
     },
+    authorName: {
+      type: String,
+    },
+    tribunalName: {
+      type: String,
+    },
+    tribunalId: {
+      type: String,
+    },
+    tribunalAddress: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
