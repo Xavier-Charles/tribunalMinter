@@ -22,7 +22,7 @@ let tribunalSchema = new Schema(
       type: String,
     },
     mintFee: {
-      type: mongoose.Decimal128,
+      type: Number,
     },
     creator: {
       type: String,
