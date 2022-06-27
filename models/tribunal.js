@@ -22,7 +22,7 @@ let tribunalSchema = new Schema(
       type: String,
     },
     mintFee: {
-      type: Number,
+      type: Integer,
     },
     creator: {
       type: String,
