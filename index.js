@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const Proposal = require("./models/proposal");
 const Tribunal = require("./models/tribunal");
+const TUser = require("./models/tuser");
 
 const { MONGO_URL } = process.env;
 
@@ -239,6 +240,133 @@ router.delete("/tribunal/:tribunalId", async (req, res) => {
       res.status(400).json({
         status: 400,
         message: "No tribunal found",
+      });
+    }
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+
+
+
+// Get tUsers Count 
+router.get("/t-users/count", async (req, res) => {
+  try {
+    let data = await TUser.find();
+    res.status(200).json({
+      status: 200,
+      count: data.length(),
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Get tUsers
+router.get("/t-users", async (req, res) => {
+  try {
+    let data = await TUser.find();
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Create a tUser
+router.post("/t-user", async (req, res) => {
+  try {
+    let tUser = new TUser(req.body);
+    data = await tUser.save();
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Read a tUser
+router.get("/t-user/:tUserId", async (req, res) => {
+  try {
+    let tUser = await TUser.findOne({
+      _id: req.params.tUserId,
+    });
+    if (tUser) {
+      res.status(200).json({
+        status: 200,
+        data: tUser,
+      });
+    } else
+      res.status(400).json({
+        status: 400,
+        message: "No tUser found",
+      });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Update a tUser
+router.put("/t-user/:tUserId", async (req, res) => {
+  try {
+    let data = await TUser.findByIdAndUpdate(
+      req.params.tUserId,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    if (data) {
+      res.status(200).json({
+        status: 200,
+        data: data,
+      });
+    } else
+      res.status(400).json({
+        status: 400,
+        message: "No tUser found",
+      });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Delete tUser
+router.delete("/t-user/:tUserId", async (req, res) => {
+  try {
+    let data = await Proposal.findByIdAndRemove(req.params.tUserId);
+    if (data) {
+      res.status(200).json({
+        status: 200,
+        message: "Proposal deleted successfully",
+      });
+    } else {
+      res.status(400).json({
+        status: 400,
+        message: "No tUser found",
       });
     }
   } catch (err) {
