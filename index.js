@@ -259,7 +259,7 @@ router.get("/t-users/count", async (req, res) => {
     let data = await TUser.find();
     res.status(200).json({
       status: 200,
-      count: data.length(),
+      count: data.length,
     });
   } catch (err) {
     res.status(400).json({
