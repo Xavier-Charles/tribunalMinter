@@ -256,10 +256,10 @@ router.delete("/tribunal/:tribunalId", async (req, res) => {
 // Get tUsers Count 
 router.get("/t-users/count", async (req, res) => {
   try {
-    let data = await TUser.find();
+    let count = await (await TUser.find()).length;
     res.status(200).json({
       status: 200,
-      count: data.length,
+      count: count,
     });
   } catch (err) {
     res.status(400).json({
