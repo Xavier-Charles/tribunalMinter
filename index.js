@@ -378,8 +378,8 @@ router.delete("/t-user/:tUserId", async (req, res) => {
 });
 
 // Initialize server
-app.listen(5000, () => {
-  console.log("Running on port 5000.");
+app.listen(5500, () => {
+  console.log("Running on port 5500.");
 });
 
 // Export the Express API

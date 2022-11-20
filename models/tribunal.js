@@ -15,8 +15,11 @@ let tribunalSchema = new Schema(
     about: {
       type: String,
     },
-    address: {
+    contract_address: {
       type: String,
+    },
+    contract_address: {
+      type: number,
     },
     fileUrl: {
       type: String,
