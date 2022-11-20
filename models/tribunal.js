@@ -15,7 +15,7 @@ let tribunalSchema = new Schema(
     about: {
       type: String,
     },
-    contract_address: {
+    contractAddress: {
       type: String,
     },
     chainId: {
