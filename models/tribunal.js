@@ -18,8 +18,8 @@ let tribunalSchema = new Schema(
     contract_address: {
       type: String,
     },
-    contract_address: {
-      type: number,
+    chainId: {
+      type: Number,
     },
     fileUrl: {
       type: String,
