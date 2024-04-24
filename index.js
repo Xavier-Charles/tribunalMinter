@@ -1,9 +1,10 @@
 // Add Express
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose"); 
+const mongoose = require("mongoose");
 require("dotenv").config();
 const Proposal = require("./models/proposal");
+const UserNFTs = require("./models/userNFTs");
 const Tribunal = require("./models/tribunal");
 const TUser = require("./models/tuser");
 
@@ -32,6 +33,115 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 
+// Get userNFTs
+router.get("/user-nfts", async (req, res) => {
+  try {
+    let data = await UserNFTs.find();
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Get userNFTs from userAddress
+router.get("/user-nfts/user/:userAddress", async (req, res) => {
+  try {
+    let data = await UserNFTs.find({
+      userAddress: req.params.userAddress,
+    });
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Create a userNFT
+router.post("/user-nft", async (req, res) => {
+  try {
+    let userNFT = new UserNFTs(req.body);
+    data = await userNFT.save();
+    res.status(200).json({
+      status: 200,
+      data: data,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Read a userNFT
+router.get("/user-nft/:userNFTId", async (req, res) => {
+  try {
+    let userNFT = await UserNFTs.findOne({
+      _id: req.params.userNFTId,
+    });
+    if (userNFT) {
+      res.status(200).json({
+        status: 200,
+        data: userNFT,
+      });
+    } else
+      res.status(400).json({
+        status: 400,
+        message: "No userNFT found",
+      });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
+
+// Update a userNFT
+router.put("/user-nft/:userNFTId", async (req, res) => {
+  try {
+    let data;
+    if (req.body.nftOwnerAddress) {
+      data = await UserNFTs.findOneAndUpdate(
+        { nftId: req.body.nftId },
+        { nftOwnerAddress: req.body.nftOwnerAddress },
+        {
+          new: true,
+        }
+      );
+    } else {
+      data = await UserNFTs.findByIdAndUpdate(req.params.userNFTId, req.body, {
+        new: true,
+      });
+    }
+    if (data) {
+      res.status(200).json({
+        status: 200,
+        data: data,
+      });
+    } else
+      res.status(400).json({
+        status: 400,
+        message: "No userNFT found",
+      });
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      message: err.message,
+    });
+  }
+});
 
 // Get proposals
 router.get("/proposals", async (req, res) => {
@@ -141,7 +251,6 @@ router.delete("/proposal/:proposalId", async (req, res) => {
   }
 });
 
-
 // Get tribunals
 router.get("/tribunals", async (req, res) => {
   try {
@@ -250,16 +359,13 @@ router.delete("/tribunal/:tribunalId", async (req, res) => {
   }
 });
 
-
-
-
-// Get tUsers Count 
+// Get tUsers Count
 router.get("/t-users/count", async (req, res) => {
   try {
     let count = await TUser.countDocuments();
     res.status(200).json({
       status: 200,
-      data: {count: count},
+      data: { count: count },
     });
   } catch (err) {
     res.status(400).json({
@@ -329,13 +435,9 @@ router.get("/t-user/:tUserId", async (req, res) => {
 // Update a tUser
 router.put("/t-user/:tUserId", async (req, res) => {
   try {
-    let data = await TUser.findByIdAndUpdate(
-      req.params.tUserId,
-      req.body,
-      {
-        new: true,
-      }
-    );
+    let data = await TUser.findByIdAndUpdate(req.params.tUserId, req.body, {
+      new: true,
+    });
     if (data) {
       res.status(200).json({
         status: 200,
